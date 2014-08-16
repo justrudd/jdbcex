@@ -17,6 +17,7 @@
 package jdbcex;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URL;
 import java.sql.Array;
 import java.sql.Blob;
@@ -30,6 +31,10 @@ import java.sql.SQLException;
 import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Optional;
@@ -38,6 +43,206 @@ import java.util.Optional;
  *
  */
 public interface ResultSetEx extends ResultSet {
+
+    default Optional<BigDecimal> getCoercedBigDecimal(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToBigDecimal);
+    }
+
+    default Optional<BigDecimal> getCoercedBigDecimal(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToBigDecimal);
+    }
+
+    default Optional<BigInteger> getCoercedBigInteger(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToBigInteger);
+    }
+
+    default Optional<BigInteger> getCoercedBigInteger(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToBigInteger);
+    }
+
+    default Optional<Boolean> getCoercedBoolean(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToBoolean);
+    }
+
+    default Optional<Boolean> getCoercedBoolean(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToBoolean);
+    }
+
+    default Optional<Byte> getCoercedByte(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToByte);
+    }
+
+    default Optional<Byte> getCoercedByte(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToByte);
+    }
+
+    default Optional<Character> getCoercedCharacter(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToCharacter);
+    }
+
+    default Optional<Character> getCoercedCharacter(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToCharacter);
+    }
+
+    default Optional<Double> getCoercedDouble(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToDouble);
+    }
+
+    default Optional<Double> getCoercedDouble(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToDouble);
+    }
+
+    default Optional<Float> getCoercedFloat(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToFloat);
+    }
+
+    default Optional<Float> getCoercedFloat(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToFloat);
+    }
+
+    default Optional<Integer> getCoercedInteger(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToInteger);
+    }
+
+    default Optional<Integer> getCoercedInteger(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToInteger);
+    }
+
+    default Optional<LocalDate> getCoercedLocalDate(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToLocalDate);
+    }
+
+    default Optional<LocalDate> getCoercedLocalDate(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToLocalDate);
+    }
+
+    default Optional<LocalTime> getCoercedLocalTime(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToLocalTime);
+    }
+
+    default Optional<LocalTime> getCoercedLocalTime(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToLocalTime);
+    }
+
+    default Optional<Long> getCoercedLong(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToLong);
+    }
+
+    default Optional<Long> getCoercedLong(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToLong);
+    }
+
+    default Optional<Short> getCoercedShort(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToShort);
+    }
+
+    default Optional<Short> getCoercedShort(final String columnName) throws SQLException {
+        return getOptionalObject(columnName)
+                .flatMap(Coercions::coerceToShort);
+    }
+
+    default Instant getInstant(final int columnIndex) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalInstant(columnIndex).orElse(null);
+    }
+
+    default Instant getInstant(final String columnName) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalInstant(columnName).orElse(null);
+    }
+
+    default Instant getInstant(final int columnIndex, Calendar cal) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalInstant(columnIndex, cal).orElse(null);
+    }
+
+    default Instant getInstant(final String columnName, Calendar cal) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalInstant(columnName, cal).orElse(null);
+    }
+
+    default LocalDate getLocalDate(final int columnIndex) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalDate(columnIndex).orElse(null);
+    }
+
+    default LocalDate getLocalDate(final String columName) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalDate(columName).orElse(null);
+    }
+
+    default LocalDate getLocalDate(final int columnIndex, Calendar cal) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalDate(columnIndex, cal).orElse(null);
+    }
+
+    default LocalDate getLocalDate(final String columName, Calendar cal) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalDate(columName, cal).orElse(null);
+    }
+
+    default LocalDateTime getLocalDateTime(final int columnIndex) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalDateTime(columnIndex).orElse(null);
+    }
+
+    default LocalDateTime getLocalDateTime(final String columName) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalDateTime(columName).orElse(null);
+    }
+
+    default LocalDateTime getLocalDateTime(final int columnIndex, Calendar cal) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalDateTime(columnIndex, cal).orElse(null);
+    }
+
+    default LocalDateTime getLocalDateTime(final String columName, Calendar cal) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalDateTime(columName, cal).orElse(null);
+    }
+
+    default LocalTime getLocalTime(final int columnIndex) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalTime(columnIndex).orElse(null);
+    }
+
+    default LocalTime getLocalTime(final String columName) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalTime(columName).orElse(null);
+    }
+
+    default LocalTime getLocalTime(final int columnIndex, Calendar cal) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalTime(columnIndex, cal).orElse(null);
+    }
+
+    default LocalTime getLocalTime(final String columName, Calendar cal) throws SQLException {
+        // emulate normal JDBC calls which return null
+        return getOptionalLocalTime(columName, cal).orElse(null);
+    }
 
     /**
      * See {@link ResultSet#getArray(int)} for the basics of this method.
@@ -480,6 +685,70 @@ public interface ResultSetEx extends ResultSet {
         return wasNull()
                 ? Optional.empty()
                 : Optional.of(value);
+    }
+
+    default Optional<Instant> getOptionalInstant(int columnIndex) throws SQLException {
+        return getOptionalTimestamp(columnIndex).map(Timestamp::toInstant);
+    }
+
+    default Optional<Instant> getOptionalInstant(String columnName) throws SQLException {
+        return getOptionalTimestamp(columnName).map(Timestamp::toInstant);
+    }
+
+    default Optional<Instant> getOptionalInstant(int columnIndex, Calendar cal) throws SQLException {
+        return getOptionalTimestamp(columnIndex, cal).map(Timestamp::toInstant);
+    }
+
+    default Optional<Instant> getOptionalInstant(String columnName, Calendar cal) throws SQLException {
+        return getOptionalTimestamp(columnName, cal).map(Timestamp::toInstant);
+    }
+
+    default Optional<LocalDate> getOptionalLocalDate(final int columnIndex) throws SQLException {
+        return getOptionalDate(columnIndex).map(Date::toLocalDate);
+    }
+
+    default Optional<LocalDate> getOptionalLocalDate(final String columnName) throws SQLException {
+        return getOptionalDate(columnName).map(Date::toLocalDate);
+    }
+
+    default Optional<LocalDate> getOptionalLocalDate(final int columnIndex, Calendar cal) throws SQLException {
+        return getOptionalDate(columnIndex, cal).map(Date::toLocalDate);
+    }
+
+    default Optional<LocalDate> getOptionalLocalDate(final String columnName, Calendar cal) throws SQLException {
+        return getOptionalDate(columnName, cal).map(Date::toLocalDate);
+    }
+
+    default Optional<LocalDateTime> getOptionalLocalDateTime(final int columnIndex) throws SQLException {
+        return getOptionalTimestamp(columnIndex).map(Timestamp::toLocalDateTime);
+    }
+
+    default Optional<LocalDateTime> getOptionalLocalDateTime(final String columnName) throws SQLException {
+        return getOptionalTimestamp(columnName).map(Timestamp::toLocalDateTime);
+    }
+
+    default Optional<LocalDateTime> getOptionalLocalDateTime(final int columnIndex, Calendar cal) throws SQLException {
+        return getOptionalTimestamp(columnIndex, cal).map(Timestamp::toLocalDateTime);
+    }
+
+    default Optional<LocalDateTime> getOptionalLocalDateTime(final String columnName, Calendar cal) throws SQLException {
+        return getOptionalTimestamp(columnName, cal).map(Timestamp::toLocalDateTime);
+    }
+
+    default Optional<LocalTime> getOptionalLocalTime(final int columnIndex) throws SQLException {
+        return getOptionalTime(columnIndex).map(Time::toLocalTime);
+    }
+
+    default Optional<LocalTime> getOptionalLocalTime(final String columnName) throws SQLException {
+        return getOptionalTime(columnName).map(Time::toLocalTime);
+    }
+
+    default Optional<LocalTime> getOptionalLocalTime(final int columnIndex, Calendar cal) throws SQLException {
+        return getOptionalTime(columnIndex, cal).map(Time::toLocalTime);
+    }
+
+    default Optional<LocalTime> getOptionalLocalTime(final String columnName, Calendar cal) throws SQLException {
+        return getOptionalTime(columnName, cal).map(Time::toLocalTime);
     }
 
     /**
