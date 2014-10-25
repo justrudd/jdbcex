@@ -30,11 +30,11 @@ final class Coercions {
                     .is(Short.class).thenReturn(v -> new BigDecimal(v.longValue()))
                     .is(Integer.class).thenReturn(v -> new BigDecimal(v.longValue()))
                     .is(Long.class).thenReturn(v -> new BigDecimal(v.longValue()))
-                    .is(Number.class).thenReturn(v -> Priv.stringToBigDecimal(v.toString()))
+                    .is(Number.class).thenReturn(v -> Conv.stringToBigDecimal(v.toString()))
                     .is(Boolean.class).thenReturn(v -> v ? BigDecimal.ONE : BigDecimal.ZERO)
-                    .is(Character.class).thenReturn(Priv::characterToBigDecimal)
-                    .is(String.class).thenReturn(Priv::stringToBigDecimal)
-                    .orElse(Priv::nullValue);
+                    .is(Character.class).thenReturn(Conv::characterToBigDecimal)
+                    .is(String.class).thenReturn(Conv::stringToBigDecimal)
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
@@ -50,9 +50,9 @@ final class Coercions {
                     .is(BigDecimal.class).thenReturn(BigDecimal::toBigInteger)
                     .is(Number.class).thenReturn(v -> BigInteger.valueOf(v.longValue()))
                     .is(Boolean.class).thenReturn(v -> v ? BigInteger.ONE : BigInteger.ZERO)
-                    .is(Character.class).thenReturn(Priv::characterToBigInteger)
-                    .is(String.class).thenReturn(Priv::stringToBigInteger)
-                    .orElse(Priv::nullValue);
+                    .is(Character.class).thenReturn(Conv::characterToBigInteger)
+                    .is(String.class).thenReturn(Conv::stringToBigInteger)
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
@@ -66,9 +66,9 @@ final class Coercions {
                 whenTypeOf(o)
                     .is(Boolean.class).thenReturn(identity())
                     .is(Number.class).thenReturn(v -> v.intValue() != 0)
-                    .is(Character.class).thenReturn(Priv::characterToBoolean)
-                    .is(String.class).thenReturn(Priv::stringToBoolean)
-                    .orElse(Priv::nullValue);
+                    .is(Character.class).thenReturn(Conv::characterToBoolean)
+                    .is(String.class).thenReturn(Conv::stringToBoolean)
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
@@ -83,9 +83,9 @@ final class Coercions {
                     .is(Byte.class).thenReturn(identity())
                     .is(Number.class).thenReturn(Number::byteValue)
                     .is(Boolean.class).thenReturn(v -> v ? (byte)1 : 0)
-                    .is(Character.class).thenReturn(Priv::characterToByte)
-                    .is(String.class).thenReturn(Priv::stringToByte)
-                    .orElse(Priv::nullValue);
+                    .is(Character.class).thenReturn(Conv::characterToByte)
+                    .is(String.class).thenReturn(Conv::stringToByte)
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
@@ -100,7 +100,7 @@ final class Coercions {
                     .is(Character.class).thenReturn(identity())
                     .is(String.class).thenReturn(v -> v.length() == 1 ? v.charAt(0) : null)
                     .is(Boolean.class).thenReturn(v -> v ? 't' : 'f')
-                    .orElse(Priv::nullValue);
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
@@ -115,9 +115,9 @@ final class Coercions {
                     .is(Double.class).thenReturn(identity())
                     .is(Number.class).thenReturn(Number::doubleValue)
                     .is(Boolean.class).thenReturn(v -> v ? 1.0d : 0.0d)
-                    .is(Character.class).thenReturn(Priv::characterToDouble)
-                    .is(String.class).thenReturn(Priv::stringToDouble)
-                    .orElse(Priv::nullValue);
+                    .is(Character.class).thenReturn(Conv::characterToDouble)
+                    .is(String.class).thenReturn(Conv::stringToDouble)
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
@@ -132,9 +132,9 @@ final class Coercions {
                     .is(Float.class).thenReturn(identity())
                     .is(Number.class).thenReturn(Number::floatValue)
                     .is(Boolean.class).thenReturn(v -> v ? 1.0f : 0.0f)
-                    .is(Character.class).thenReturn(Priv::characterToFloat)
-                    .is(String.class).thenReturn(Priv::stringToFloat)
-                    .orElse(Priv::nullValue);
+                    .is(Character.class).thenReturn(Conv::characterToFloat)
+                    .is(String.class).thenReturn(Conv::stringToFloat)
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
@@ -149,9 +149,9 @@ final class Coercions {
                     .is(Integer.class).thenReturn(identity())
                     .is(Number.class).thenReturn(Number::intValue)
                     .is(Boolean.class).thenReturn(v -> v ? 1 : 0)
-                    .is(Character.class).thenReturn(Priv::characterToInteger)
-                    .is(String.class).thenReturn(Priv::stringToInteger)
-                    .orElse(Priv::nullValue);
+                    .is(Character.class).thenReturn(Conv::characterToInteger)
+                    .is(String.class).thenReturn(Conv::stringToInteger)
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
@@ -166,7 +166,7 @@ final class Coercions {
                     .is(LocalDate.class).thenReturn(identity())
                     .is(Date.class).thenReturn(Date::toLocalDate)
                     .is(Timestamp.class).thenReturn(ts -> ts.toLocalDateTime().toLocalDate())
-                    .orElse(Priv::nullValue);
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
@@ -181,7 +181,7 @@ final class Coercions {
                     .is(LocalTime.class).thenReturn(identity())
                     .is(Time.class).thenReturn(Time::toLocalTime)
                     .is(Timestamp.class).thenReturn(ts -> ts.toLocalDateTime().toLocalTime())
-                    .orElse(Priv::nullValue);
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
@@ -196,9 +196,9 @@ final class Coercions {
                     .is(Long.class).thenReturn(identity())
                     .is(Number.class).thenReturn(Number::longValue)
                     .is(Boolean.class).thenReturn(v -> v ? (long) 1 : 0)
-                    .is(Character.class).thenReturn(Priv::characterToLong)
-                    .is(String.class).thenReturn(Priv::stringToLong)
-                    .orElse(Priv::nullValue);
+                    .is(Character.class).thenReturn(Conv::characterToLong)
+                    .is(String.class).thenReturn(Conv::stringToLong)
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
@@ -213,14 +213,14 @@ final class Coercions {
                     .is(Short.class).thenReturn(identity())
                     .is(Number.class).thenReturn(Number::shortValue)
                     .is(Boolean.class).thenReturn(v -> v ? (short) 1 : 0)
-                    .is(Character.class).thenReturn(Priv::characterToShort)
-                    .is(String.class).thenReturn(Priv::stringToShort)
-                    .orElse(Priv::nullValue);
+                    .is(Character.class).thenReturn(Conv::characterToShort)
+                    .is(String.class).thenReturn(Conv::stringToShort)
+                    .orElse(Conv::nullValue);
 
         return ofNullable(result);
     }
 
-    private static final class Priv {
+    private static final class Conv {
         static BigDecimal characterToBigDecimal(final Character c) {
             if (Character.isDigit(c)) {
                 return new BigDecimal(Character.digit(c, 10));
