@@ -60,8 +60,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToBigDecimal);
     }
 
-    default Optional<BigDecimal> getCoercedBigDecimal(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<BigDecimal> getCoercedBigDecimal(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToBigDecimal);
     }
 
@@ -70,8 +70,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToBigInteger);
     }
 
-    default Optional<BigInteger> getCoercedBigInteger(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<BigInteger> getCoercedBigInteger(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToBigInteger);
     }
 
@@ -80,8 +80,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToBoolean);
     }
 
-    default Optional<Boolean> getCoercedBoolean(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<Boolean> getCoercedBoolean(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToBoolean);
     }
 
@@ -90,8 +90,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToByte);
     }
 
-    default Optional<Byte> getCoercedByte(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<Byte> getCoercedByte(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToByte);
     }
 
@@ -100,8 +100,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToCharacter);
     }
 
-    default Optional<Character> getCoercedCharacter(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<Character> getCoercedCharacter(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToCharacter);
     }
 
@@ -110,8 +110,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToDouble);
     }
 
-    default Optional<Double> getCoercedDouble(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<Double> getCoercedDouble(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToDouble);
     }
 
@@ -120,8 +120,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToFloat);
     }
 
-    default Optional<Float> getCoercedFloat(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<Float> getCoercedFloat(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToFloat);
     }
 
@@ -130,8 +130,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToInteger);
     }
 
-    default Optional<Integer> getCoercedInteger(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<Integer> getCoercedInteger(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToInteger);
     }
 
@@ -140,8 +140,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToLocalDate);
     }
 
-    default Optional<LocalDate> getCoercedLocalDate(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<LocalDate> getCoercedLocalDate(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToLocalDate);
     }
 
@@ -150,8 +150,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToLocalTime);
     }
 
-    default Optional<LocalTime> getCoercedLocalTime(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<LocalTime> getCoercedLocalTime(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToLocalTime);
     }
 
@@ -160,8 +160,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToLong);
     }
 
-    default Optional<Long> getCoercedLong(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<Long> getCoercedLong(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToLong);
     }
 
@@ -170,8 +170,8 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToShort);
     }
 
-    default Optional<Short> getCoercedShort(final String columnName) throws SQLException {
-        return getOptionalObject(columnName)
+    default Optional<Short> getCoercedShort(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToShort);
     }
 
@@ -180,19 +180,19 @@ public interface ResultSetEx extends ResultSet {
         return getOptionalInstant(columnIndex).orElse(null);
     }
 
-    default Instant getInstant(final String columnName) throws SQLException {
+    default Instant getInstant(final String columnLabel) throws SQLException {
         // emulate normal JDBC calls which return null
-        return getOptionalInstant(columnName).orElse(null);
+        return getOptionalInstant(columnLabel).orElse(null);
     }
 
-    default Instant getInstant(final int columnIndex, Calendar cal) throws SQLException {
+    default Instant getInstant(final int columnIndex, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalInstant(columnIndex, cal).orElse(null);
     }
 
-    default Instant getInstant(final String columnName, Calendar cal) throws SQLException {
+    default Instant getInstant(final String columnLabel, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
-        return getOptionalInstant(columnName, cal).orElse(null);
+        return getOptionalInstant(columnLabel, cal).orElse(null);
     }
 
     default LocalDate getLocalDate(final int columnIndex) throws SQLException {
@@ -205,14 +205,14 @@ public interface ResultSetEx extends ResultSet {
         return getOptionalLocalDate(columName).orElse(null);
     }
 
-    default LocalDate getLocalDate(final int columnIndex, Calendar cal) throws SQLException {
+    default LocalDate getLocalDate(final int columnIndex, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalDate(columnIndex, cal).orElse(null);
     }
 
-    default LocalDate getLocalDate(final String columName, Calendar cal) throws SQLException {
+    default LocalDate getLocalDate(final String columnLabel, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
-        return getOptionalLocalDate(columName, cal).orElse(null);
+        return getOptionalLocalDate(columnLabel, cal).orElse(null);
     }
 
     default LocalDateTime getLocalDateTime(final int columnIndex) throws SQLException {
@@ -220,19 +220,19 @@ public interface ResultSetEx extends ResultSet {
         return getOptionalLocalDateTime(columnIndex).orElse(null);
     }
 
-    default LocalDateTime getLocalDateTime(final String columName) throws SQLException {
+    default LocalDateTime getLocalDateTime(final String columnLabel) throws SQLException {
         // emulate normal JDBC calls which return null
-        return getOptionalLocalDateTime(columName).orElse(null);
+        return getOptionalLocalDateTime(columnLabel).orElse(null);
     }
 
-    default LocalDateTime getLocalDateTime(final int columnIndex, Calendar cal) throws SQLException {
+    default LocalDateTime getLocalDateTime(final int columnIndex, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalDateTime(columnIndex, cal).orElse(null);
     }
 
-    default LocalDateTime getLocalDateTime(final String columName, Calendar cal) throws SQLException {
+    default LocalDateTime getLocalDateTime(final String columnLabel, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
-        return getOptionalLocalDateTime(columName, cal).orElse(null);
+        return getOptionalLocalDateTime(columnLabel, cal).orElse(null);
     }
 
     default LocalTime getLocalTime(final int columnIndex) throws SQLException {
@@ -240,19 +240,19 @@ public interface ResultSetEx extends ResultSet {
         return getOptionalLocalTime(columnIndex).orElse(null);
     }
 
-    default LocalTime getLocalTime(final String columName) throws SQLException {
+    default LocalTime getLocalTime(final String columnLabel) throws SQLException {
         // emulate normal JDBC calls which return null
-        return getOptionalLocalTime(columName).orElse(null);
+        return getOptionalLocalTime(columnLabel).orElse(null);
     }
 
-    default LocalTime getLocalTime(final int columnIndex, Calendar cal) throws SQLException {
+    default LocalTime getLocalTime(final int columnIndex, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalTime(columnIndex, cal).orElse(null);
     }
 
-    default LocalTime getLocalTime(final String columName, Calendar cal) throws SQLException {
+    default LocalTime getLocalTime(final String columnLabel, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
-        return getOptionalLocalTime(columName, cal).orElse(null);
+        return getOptionalLocalTime(columnLabel, cal).orElse(null);
     }
 
     /**
@@ -269,7 +269,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<Array> getOptionalArray(int columnIndex) throws SQLException {
+    default Optional<Array> getOptionalArray(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getArray(columnIndex));
     }
 
@@ -288,7 +288,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<Array> getOptionalArray(String columnLabel) throws SQLException {
+    default Optional<Array> getOptionalArray(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getArray(columnLabel));
     }
 
@@ -304,7 +304,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<BigDecimal> getOptionalBigDecimal(int columnIndex) throws SQLException {
+    default Optional<BigDecimal> getOptionalBigDecimal(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getBigDecimal(columnIndex));
     }
 
@@ -321,7 +321,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<BigDecimal> getOptionalBigDecimal(String columnLabel) throws SQLException {
+    default Optional<BigDecimal> getOptionalBigDecimal(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getBigDecimal(columnLabel));
     }
 
@@ -339,7 +339,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<Blob> getOptionalBlob(int columnIndex) throws SQLException {
+    default Optional<Blob> getOptionalBlob(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getBlob(columnIndex));
     }
 
@@ -358,7 +358,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<Blob> getOptionalBlob(String columnLabel) throws SQLException {
+    default Optional<Blob> getOptionalBlob(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getBlob(columnLabel));
     }
 
@@ -374,7 +374,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Boolean> getOptionalBoolean(int columnIndex) throws SQLException {
+    default Optional<Boolean> getOptionalBoolean(final int columnIndex) throws SQLException {
         final boolean value = getBoolean(columnIndex);
         return wasNull()
                 ? Optional.empty()
@@ -394,7 +394,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Boolean> getOptionalBoolean(String columnLabel) throws SQLException {
+    default Optional<Boolean> getOptionalBoolean(final String columnLabel) throws SQLException {
         final boolean value = getBoolean(columnLabel);
         return wasNull()
                 ? Optional.empty()
@@ -413,7 +413,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Byte> getOptionalByte(int columnIndex) throws SQLException {
+    default Optional<Byte> getOptionalByte(final int columnIndex) throws SQLException {
         final byte value = getByte(columnIndex);
         return wasNull()
                 ? Optional.empty()
@@ -433,7 +433,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Byte> getOptionalByte(String columnLabel) throws SQLException {
+    default Optional<Byte> getOptionalByte(final String columnLabel) throws SQLException {
         final byte value = getByte(columnLabel);
         return wasNull()
                 ? Optional.empty()
@@ -452,7 +452,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<byte[]> getOptionalBytes(int columnIndex) throws SQLException {
+    default Optional<byte[]> getOptionalBytes(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getBytes(columnIndex));
     }
 
@@ -469,7 +469,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<byte[]> getOptionalBytes(String columnLabel) throws SQLException {
+    default Optional<byte[]> getOptionalBytes(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getBytes(columnLabel));
     }
 
@@ -487,7 +487,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<Clob> getOptionalClob(int columnIndex) throws SQLException {
+    default Optional<Clob> getOptionalClob(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getClob(columnIndex));
     }
 
@@ -505,7 +505,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<Clob> getOptionalClob(String columnLabel) throws SQLException {
+    default Optional<Clob> getOptionalClob(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getClob(columnLabel));
     }
 
@@ -521,7 +521,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Date> getOptionalDate(int columnIndex) throws SQLException {
+    default Optional<Date> getOptionalDate(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getDate(columnIndex));
     }
 
@@ -538,7 +538,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Date> getOptionalDate(String columnLabel) throws SQLException {
+    default Optional<Date> getOptionalDate(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getDate(columnLabel));
     }
 
@@ -556,7 +556,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Date> getOptionalDate(int columnIndex, Calendar cal)
+    default Optional<Date> getOptionalDate(final int columnIndex, final Calendar cal)
             throws SQLException {
         return Optional.ofNullable(getDate(columnIndex, cal));
     }
@@ -573,10 +573,10 @@ public interface ResultSetEx extends ResultSet {
      *          the column value; if the value is SQL <code>NULL</code>, the value
      *          {@link Optional#empty() empty} is returned.
      * @exception SQLException
-     *          if the columnName is not valid; if a database access error occurs or this method is
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Date> getOptionalDate(String columnLabel, Calendar cal)
+    default Optional<Date> getOptionalDate(final String columnLabel, final Calendar cal)
             throws SQLException {
         return Optional.ofNullable(getDate(columnLabel, cal));
     }
@@ -593,7 +593,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Double> getOptionalDouble(int columnIndex) throws SQLException {
+    default Optional<Double> getOptionalDouble(final int columnIndex) throws SQLException {
         final double value = getDouble(columnIndex);
         return wasNull()
                 ? Optional.empty()
@@ -613,7 +613,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Double> getOptionalDouble(String columnLabel) throws SQLException {
+    default Optional<Double> getOptionalDouble(final String columnLabel) throws SQLException {
         final double value = getDouble(columnLabel);
         return wasNull()
                 ? Optional.empty()
@@ -632,7 +632,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Float> getOptionalFloat(int columnIndex) throws SQLException {
+    default Optional<Float> getOptionalFloat(final int columnIndex) throws SQLException {
         final float value = getFloat(columnIndex);
         return wasNull()
                 ? Optional.empty()
@@ -652,7 +652,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Float> getOptionalFloat(String columnLabel) throws SQLException {
+    default Optional<Float> getOptionalFloat(final String columnLabel) throws SQLException {
         final float value = getFloat(columnLabel);
         return wasNull()
                 ? Optional.empty()
@@ -671,7 +671,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Integer> getOptionalInt(int columnIndex) throws SQLException {
+    default Optional<Integer> getOptionalInt(final int columnIndex) throws SQLException {
         final int value = getInt(columnIndex);
         return wasNull()
                 ? Optional.empty()
@@ -691,75 +691,75 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Integer> getOptionalInt(String columnLabel) throws SQLException {
+    default Optional<Integer> getOptionalInt(final String columnLabel) throws SQLException {
         final int value = getInt(columnLabel);
         return wasNull()
                 ? Optional.empty()
                 : Optional.of(value);
     }
 
-    default Optional<Instant> getOptionalInstant(int columnIndex) throws SQLException {
+    default Optional<Instant> getOptionalInstant(final int columnIndex) throws SQLException {
         return getOptionalTimestamp(columnIndex).map(Timestamp::toInstant);
     }
 
-    default Optional<Instant> getOptionalInstant(String columnName) throws SQLException {
-        return getOptionalTimestamp(columnName).map(Timestamp::toInstant);
+    default Optional<Instant> getOptionalInstant(final String columnLabel) throws SQLException {
+        return getOptionalTimestamp(columnLabel).map(Timestamp::toInstant);
     }
 
-    default Optional<Instant> getOptionalInstant(int columnIndex, Calendar cal) throws SQLException {
+    default Optional<Instant> getOptionalInstant(final int columnIndex, final Calendar cal) throws SQLException {
         return getOptionalTimestamp(columnIndex, cal).map(Timestamp::toInstant);
     }
 
-    default Optional<Instant> getOptionalInstant(String columnName, Calendar cal) throws SQLException {
-        return getOptionalTimestamp(columnName, cal).map(Timestamp::toInstant);
+    default Optional<Instant> getOptionalInstant(final String columnLabel, final Calendar cal) throws SQLException {
+        return getOptionalTimestamp(columnLabel, cal).map(Timestamp::toInstant);
     }
 
     default Optional<LocalDate> getOptionalLocalDate(final int columnIndex) throws SQLException {
         return getOptionalDate(columnIndex).map(Date::toLocalDate);
     }
 
-    default Optional<LocalDate> getOptionalLocalDate(final String columnName) throws SQLException {
-        return getOptionalDate(columnName).map(Date::toLocalDate);
+    default Optional<LocalDate> getOptionalLocalDate(final String columnLabel) throws SQLException {
+        return getOptionalDate(columnLabel).map(Date::toLocalDate);
     }
 
-    default Optional<LocalDate> getOptionalLocalDate(final int columnIndex, Calendar cal) throws SQLException {
+    default Optional<LocalDate> getOptionalLocalDate(final int columnIndex, final Calendar cal) throws SQLException {
         return getOptionalDate(columnIndex, cal).map(Date::toLocalDate);
     }
 
-    default Optional<LocalDate> getOptionalLocalDate(final String columnName, Calendar cal) throws SQLException {
-        return getOptionalDate(columnName, cal).map(Date::toLocalDate);
+    default Optional<LocalDate> getOptionalLocalDate(final String columnLabel, final Calendar cal) throws SQLException {
+        return getOptionalDate(columnLabel, cal).map(Date::toLocalDate);
     }
 
     default Optional<LocalDateTime> getOptionalLocalDateTime(final int columnIndex) throws SQLException {
         return getOptionalTimestamp(columnIndex).map(Timestamp::toLocalDateTime);
     }
 
-    default Optional<LocalDateTime> getOptionalLocalDateTime(final String columnName) throws SQLException {
-        return getOptionalTimestamp(columnName).map(Timestamp::toLocalDateTime);
+    default Optional<LocalDateTime> getOptionalLocalDateTime(final String columnLabel) throws SQLException {
+        return getOptionalTimestamp(columnLabel).map(Timestamp::toLocalDateTime);
     }
 
-    default Optional<LocalDateTime> getOptionalLocalDateTime(final int columnIndex, Calendar cal) throws SQLException {
+    default Optional<LocalDateTime> getOptionalLocalDateTime(final int columnIndex, final Calendar cal) throws SQLException {
         return getOptionalTimestamp(columnIndex, cal).map(Timestamp::toLocalDateTime);
     }
 
-    default Optional<LocalDateTime> getOptionalLocalDateTime(final String columnName, Calendar cal) throws SQLException {
-        return getOptionalTimestamp(columnName, cal).map(Timestamp::toLocalDateTime);
+    default Optional<LocalDateTime> getOptionalLocalDateTime(final String columnLabel, final Calendar cal) throws SQLException {
+        return getOptionalTimestamp(columnLabel, cal).map(Timestamp::toLocalDateTime);
     }
 
     default Optional<LocalTime> getOptionalLocalTime(final int columnIndex) throws SQLException {
         return getOptionalTime(columnIndex).map(Time::toLocalTime);
     }
 
-    default Optional<LocalTime> getOptionalLocalTime(final String columnName) throws SQLException {
-        return getOptionalTime(columnName).map(Time::toLocalTime);
+    default Optional<LocalTime> getOptionalLocalTime(final String columnLabel) throws SQLException {
+        return getOptionalTime(columnLabel).map(Time::toLocalTime);
     }
 
-    default Optional<LocalTime> getOptionalLocalTime(final int columnIndex, Calendar cal) throws SQLException {
+    default Optional<LocalTime> getOptionalLocalTime(final int columnIndex, final Calendar cal) throws SQLException {
         return getOptionalTime(columnIndex, cal).map(Time::toLocalTime);
     }
 
-    default Optional<LocalTime> getOptionalLocalTime(final String columnName, Calendar cal) throws SQLException {
-        return getOptionalTime(columnName, cal).map(Time::toLocalTime);
+    default Optional<LocalTime> getOptionalLocalTime(final String columnLabel, final Calendar cal) throws SQLException {
+        return getOptionalTime(columnLabel, cal).map(Time::toLocalTime);
     }
 
     /**
@@ -774,7 +774,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Long> getOptionalLong(int columnIndex) throws SQLException {
+    default Optional<Long> getOptionalLong(final int columnIndex) throws SQLException {
         final long value = getLong(columnIndex);
         return wasNull()
                 ? Optional.empty()
@@ -794,7 +794,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Long> getOptionalLong(String columnLabel) throws SQLException {
+    default Optional<Long> getOptionalLong(final String columnLabel) throws SQLException {
         final long value = getLong(columnLabel);
         return wasNull()
                 ? Optional.empty()
@@ -815,7 +815,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<NClob> getOptionalNClob(int columnIndex) throws SQLException {
+    default Optional<NClob> getOptionalNClob(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getNClob(columnIndex));
     }
 
@@ -829,12 +829,12 @@ public interface ResultSetEx extends ResultSet {
      *          the column value; if the value is SQL <code>NULL</code>, the value
      *          {@link Optional#empty() empty} is returned.
      * @exception SQLException
-     *          if the columnName is not valid; if a database access error occurs or this method is
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<NClob> getOptionalNClob(String columnLabel) throws SQLException {
+    default Optional<NClob> getOptionalNClob(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getNClob(columnLabel));
     }
 
@@ -852,7 +852,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<String> getOptionalNString(int columnIndex) throws SQLException {
+    default Optional<String> getOptionalNString(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getNString(columnIndex));
     }
 
@@ -866,12 +866,12 @@ public interface ResultSetEx extends ResultSet {
      *          the column value; if the value is SQL <code>NULL</code>, the value
      *          {@link Optional#empty() empty} is returned.
      * @exception SQLException
-     *          if the columnName is not valid; if a database access error occurs or this method is
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<String> getOptionalNString(String columnLabel) throws SQLException {
+    default Optional<String> getOptionalNString(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getNString(columnLabel));
     }
 
@@ -887,7 +887,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Object> getOptionalObject(int columnIndex) throws SQLException {
+    default Optional<Object> getOptionalObject(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getObject(columnIndex));
     }
 
@@ -904,7 +904,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Object> getOptionalObject(String columnLabel) throws SQLException {
+    default Optional<Object> getOptionalObject(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getObject(columnLabel));
     }
 
@@ -925,7 +925,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<Object> getOptionalObject(int columnIndex, Map<String,Class<?>> map)
+    default Optional<Object> getOptionalObject(final int columnIndex, final Map<String,Class<?>> map)
             throws SQLException {
         return Optional.ofNullable(getObject(columnIndex, map));
     }
@@ -948,7 +948,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<Object> getOptionalObject(String columnLabel, Map<String,Class<?>> map)
+    default Optional<Object> getOptionalObject(final String columnLabel, final Map<String,Class<?>> map)
             throws SQLException {
         return Optional.ofNullable(getObject(columnLabel, map));
     }
@@ -971,7 +971,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default <T> Optional<T> getOptionalObject(int columnIndex, Class<T> type) throws SQLException {
+    default <T> Optional<T> getOptionalObject(final int columnIndex, final Class<T> type) throws SQLException {
         return Optional.ofNullable(getObject(columnIndex, type));
     }
 
@@ -989,12 +989,12 @@ public interface ResultSetEx extends ResultSet {
      *          the column value; if the value is SQL <code>NULL</code>, the value
      *          {@link Optional#empty() empty} is returned.
      * @exception SQLException
-     *          if the columnName is not valid; if a database access error occurs or this method is
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default <T> Optional<T> getOptionalObject(String columnLabel, Class<T> type)
+    default <T> Optional<T> getOptionalObject(final String columnLabel, final Class<T> type)
             throws SQLException {
         return Optional.ofNullable(getObject(columnLabel, type));
     }
@@ -1013,7 +1013,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<Ref> getOptionalRef(int columnIndex) throws SQLException {
+    default Optional<Ref> getOptionalRef(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getRef(columnIndex));
     }
 
@@ -1032,7 +1032,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<Ref> getOptionalRef(String columnLabel) throws SQLException {
+    default Optional<Ref> getOptionalRef(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getRef(columnLabel));
     }
 
@@ -1050,7 +1050,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<RowId> getOptionalRowId(int columnIndex) throws SQLException {
+    default Optional<RowId> getOptionalRowId(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getRowId(columnIndex));
     }
 
@@ -1064,12 +1064,12 @@ public interface ResultSetEx extends ResultSet {
      *          the column value; if the value is SQL <code>NULL</code>, the value
      *          {@link Optional#empty() empty} is returned.
      * @exception SQLException
-     *          if the columnName is not valid; if a database access error occurs or this method is
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<RowId> getOptionalRowId(String columnLabel) throws SQLException {
+    default Optional<RowId> getOptionalRowId(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getRowId(columnLabel));
     }
 
@@ -1085,7 +1085,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Short> getOptionalShort(int columnIndex) throws SQLException {
+    default Optional<Short> getOptionalShort(final int columnIndex) throws SQLException {
         final short value = getShort(columnIndex);
         return wasNull()
                 ? Optional.empty()
@@ -1105,7 +1105,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Short> getOptionalShort(String columnLabel) throws SQLException {
+    default Optional<Short> getOptionalShort(final String columnLabel) throws SQLException {
         final short value = getShort(columnLabel);
         return wasNull()
                 ? Optional.empty()
@@ -1126,7 +1126,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<SQLXML> getOptionalSQLXML(int columnIndex) throws SQLException {
+    default Optional<SQLXML> getOptionalSQLXML(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getSQLXML(columnIndex));
     }
 
@@ -1140,12 +1140,12 @@ public interface ResultSetEx extends ResultSet {
      *          the column value; if the value is SQL <code>NULL</code>, the value
      *          {@link Optional#empty() empty} is returned.
      * @exception SQLException
-     *          if the columnName is not valid; if a database access error occurs or this method is
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<SQLXML> getOptionalSQLXML(String columnLabel) throws SQLException {
+    default Optional<SQLXML> getOptionalSQLXML(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getSQLXML(columnLabel));
     }
 
@@ -1161,7 +1161,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<String> getOptionalString(int columnIndex) throws SQLException {
+    default Optional<String> getOptionalString(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getString(columnIndex));
     }
 
@@ -1178,7 +1178,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<String> getOptionalString(String columnLabel) throws SQLException {
+    default Optional<String> getOptionalString(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getString(columnLabel));
     }
 
@@ -1194,7 +1194,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Time> getOptionalTime(int columnIndex) throws SQLException {
+    default Optional<Time> getOptionalTime(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getTime(columnIndex));
     }
 
@@ -1211,7 +1211,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Time> getOptionalTime(String columnLabel) throws SQLException {
+    default Optional<Time> getOptionalTime(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getTime(columnLabel));
     }
 
@@ -1229,7 +1229,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Time> getOptionalTime(int columnIndex, Calendar cal)
+    default Optional<Time> getOptionalTime(final int columnIndex, final Calendar cal)
             throws SQLException {
         return Optional.ofNullable(getTime(columnIndex, cal));
     }
@@ -1246,10 +1246,10 @@ public interface ResultSetEx extends ResultSet {
      *          the column value; if the value is SQL <code>NULL</code>, the value
      *          {@link Optional#empty() empty} is returned.
      * @exception SQLException
-     *          if the columnName is not valid; if a database access error occurs or this method is
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Time> getOptionalTime(String columnLabel, Calendar cal)
+    default Optional<Time> getOptionalTime(final String columnLabel, final Calendar cal)
             throws SQLException {
         return Optional.ofNullable(getTime(columnLabel, cal));
     }
@@ -1266,7 +1266,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Timestamp> getOptionalTimestamp(int columnIndex) throws SQLException {
+    default Optional<Timestamp> getOptionalTimestamp(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getTimestamp(columnIndex));
     }
 
@@ -1283,7 +1283,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Timestamp> getOptionalTimestamp(String columnLabel)
+    default Optional<Timestamp> getOptionalTimestamp(final String columnLabel)
             throws SQLException {
         return Optional.ofNullable(getTimestamp(columnLabel));
     }
@@ -1302,7 +1302,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the columnIndex is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Timestamp> getOptionalTimestamp(int columnIndex, Calendar cal)
+    default Optional<Timestamp> getOptionalTimestamp(final int columnIndex, final Calendar cal)
             throws SQLException {
         return Optional.ofNullable(getTimestamp(columnIndex, cal));
     }
@@ -1319,10 +1319,10 @@ public interface ResultSetEx extends ResultSet {
      *          the column value; if the value is SQL <code>NULL</code>, the value
      *          {@link Optional#empty() empty} is returned.
      * @exception SQLException
-     *          if the columnName is not valid; if a database access error occurs or this method is
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      */
-    default Optional<Timestamp> getOptionalTimestamp(String columnLabel, Calendar cal)
+    default Optional<Timestamp> getOptionalTimestamp(final String columnLabel, final Calendar cal)
             throws SQLException {
         return Optional.ofNullable(getTimestamp(columnLabel, cal));
     }
@@ -1341,7 +1341,7 @@ public interface ResultSetEx extends ResultSet {
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<URL> getOptionalURL(int columnIndex) throws SQLException {
+    default Optional<URL> getOptionalURL(final int columnIndex) throws SQLException {
         return Optional.ofNullable(getURL(columnIndex));
     }
 
@@ -1355,12 +1355,12 @@ public interface ResultSetEx extends ResultSet {
      *          the column value; if the value is SQL <code>NULL</code>, the value
      *          {@link Optional#empty() empty} is returned.
      * @exception SQLException
-     *          if the columnName is not valid; if a database access error occurs or this method is
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
      *          called on a closed result set
      * @exception java.sql.SQLFeatureNotSupportedException
      *          if the JDBC driver does not support this method
      */
-    default Optional<URL> getOptionalURL(String columnLabel) throws SQLException {
+    default Optional<URL> getOptionalURL(final String columnLabel) throws SQLException {
         return Optional.ofNullable(getURL(columnLabel));
     }
 }
