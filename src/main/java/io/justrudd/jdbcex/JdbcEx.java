@@ -28,13 +28,25 @@
 package io.justrudd.jdbcex;
 
 import java.sql.ResultSet;
-import java.util.Objects;
+
+import static java.util.Objects.requireNonNull;
 
 public final class JdbcEx {
 
-    public static ResultSetEx wrap(final ResultSet resultSet) {
-        Objects.requireNonNull(resultSet, "resultSet cannot be null");
-        return new ResultSetExImpl(resultSet);
+    /**
+     * Wrap a {@link ResultSetEx} around a {@link ResultSet}.
+     * @param rs
+     *      The {@link ResultSet} to wrap.
+     * @return a new instance of {@link ResultSetEx}.
+     * @throws NullPointerException if {@code rs} is null.
+     */
+    public static ResultSetEx wrap(final ResultSet rs) {
+        requireNonNull(rs, "rs cannot be null");
+
+        if (rs instanceof ResultSetEx) {
+            return (ResultSetEx) rs;
+        }
+        return new ResultSetExImpl(rs);
     }
 
     private JdbcEx() { }
