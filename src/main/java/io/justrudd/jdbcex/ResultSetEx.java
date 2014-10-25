@@ -50,46 +50,367 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Optional;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+import static java.util.Optional.ofNullable;
+
 /**
- *
+ * An extension to the standard ResultSet which adds the ability to retrieve Optionals
+ * instead of nulls and adds the ability to have coercions done where needed.
  */
 public interface ResultSetEx extends ResultSet {
 
+    /**
+     * <p>
+     * Attempts to coerce the value of the column into a {@link BigDecimal} using
+     * the following coercions.
+     * <table>
+     *     <thead>
+     *         <tr>
+     *             <th>#</th>
+     *             <th>Source Type</th>
+     *             <th>Conversion</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td>1</td>
+     *             <td>{@link BigDecimal}</td>
+     *             <td>Returned as is</td>
+     *         </tr>
+     *         <tr>
+     *             <td>2</td>
+     *             <td>{@link BigInteger}</td>
+     *             <td>{@link BigDecimal#BigDecimal(java.math.BigInteger)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>3</td>
+     *             <td>{@link Byte}</td>
+     *             <td>Source converted to {@link Byte#longValue() long} passed to {@link BigDecimal#BigDecimal(long)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>4</td>
+     *             <td>{@link Short}</td>
+     *             <td>Source converted to {@link Short#longValue() long} passed to {@link BigDecimal#BigDecimal(long)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>5</td>
+     *             <td>{@link Integer}</td>
+     *             <td>Source converted to {@link Integer#longValue() long} passed to {@link BigDecimal#BigDecimal(long)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>6</td>
+     *             <td>{@link Long}</td>
+     *             <td>Source converted to {@link Long#longValue() long} passed to {@link BigDecimal#BigDecimal(long)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>7</td>
+     *             <td>All other {@link Number}</td>
+     *             <td>Source converted to {@link String} passed to {@link BigDecimal#BigDecimal(java.lang.String)}.</td>
+     *         </tr>
+     *         <tr>
+     *             <td>8</td>
+     *             <td>{@link Boolean}</td>
+     *             <td>{@link Boolean#TRUE true} converted to {@link BigDecimal#ONE}, {@link Boolean#FALSE false} converted to {@link BigDecimal#ZERO}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>9</td>
+     *             <td>{@link Character}</td>
+     *             <td>If {@link Character#isDigit(char)}, passed to {@link Character#digit(char, int)} with radix 10.</td>
+     *         </tr>
+     *         <tr>
+     *             <td>10</td>
+     *             <td>{@link String}</td>
+     *             <td>Source passed as is to {@link BigDecimal#BigDecimal(java.lang.String)}</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * </p>
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link BigDecimal}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link BigDecimal}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<BigDecimal> getCoercedBigDecimal(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToBigDecimal);
     }
 
+    /**
+     * <p>
+     * Attempts to coerce the value of the column into a {@link BigDecimal} using
+     * the following coercions.
+     * <table>
+     *     <thead>
+     *         <tr>
+     *             <th>#</th>
+     *             <th>Source Type</th>
+     *             <th>Conversion</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td>1</td>
+     *             <td>{@link BigDecimal}</td>
+     *             <td>Returned as is</td>
+     *         </tr>
+     *         <tr>
+     *             <td>2</td>
+     *             <td>{@link BigInteger}</td>
+     *             <td>{@link BigDecimal#BigDecimal(java.math.BigInteger)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>3</td>
+     *             <td>{@link Byte}</td>
+     *             <td>Source converted to {@link Byte#longValue() long} passed to {@link BigDecimal#BigDecimal(long)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>4</td>
+     *             <td>{@link Short}</td>
+     *             <td>Source converted to {@link Short#longValue() long} passed to {@link BigDecimal#BigDecimal(long)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>5</td>
+     *             <td>{@link Integer}</td>
+     *             <td>Source converted to {@link Integer#longValue() long} passed to {@link BigDecimal#BigDecimal(long)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>6</td>
+     *             <td>{@link Long}</td>
+     *             <td>Source converted to {@link Long#longValue() long} passed to {@link BigDecimal#BigDecimal(long)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>7</td>
+     *             <td>All other {@link Number}</td>
+     *             <td>Source converted to {@link String} passed to {@link BigDecimal#BigDecimal(java.lang.String)}.</td>
+     *         </tr>
+     *         <tr>
+     *             <td>8</td>
+     *             <td>{@link Boolean}</td>
+     *             <td>{@link Boolean#TRUE true} converted to {@link BigDecimal#ONE}, {@link Boolean#FALSE false} converted to {@link BigDecimal#ZERO}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>9</td>
+     *             <td>{@link Character}</td>
+     *             <td>If {@link Character#isDigit(char)}, passed to {@link Character#digit(char, int)} with radix 10.</td>
+     *         </tr>
+     *         <tr>
+     *             <td>10</td>
+     *             <td>{@link String}</td>
+     *             <td>Source passed as is to {@link BigDecimal#BigDecimal(java.lang.String)}</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * </p>
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link BigDecimal}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link BigDecimal}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<BigDecimal> getCoercedBigDecimal(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToBigDecimal);
     }
 
+    /**
+     * <p>
+     * Attempts to coerce the value of the column into a {@link BigInteger} using
+     * the following coercions.
+     * <table>
+     *     <thead>
+     *         <tr>
+     *             <th>#</th>
+     *             <th>Source Type</th>
+     *             <th>Conversion</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td>1</td>
+     *             <td>{@link BigInteger}</td>
+     *             <td>Returned as is</td>
+     *         </tr>
+     *         <tr>
+     *             <td>2</td>
+     *             <td>{@link BigDecimal}</td>
+     *             <td>{@link BigDecimal#toBigInteger()}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>3</td>
+     *             <td>All other {@link Number}</td>
+     *             <td>Source converted to {@link Number#longValue() long} passed to {@link BigInteger#valueOf(long)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>4</td>
+     *             <td>{@link Boolean}</td>
+     *             <td>{@link Boolean#TRUE true} converted to {@link BigInteger#ONE}, {@link Boolean#FALSE false} converted to {@link BigInteger#ZERO}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>5</td>
+     *             <td>{@link Character}</td>
+     *             <td>If {@link Character#isDigit(char)}, passed to {@link Character#digit(char, int)} with radix 10.</td>
+     *         </tr>
+     *         <tr>
+     *             <td>6</td>
+     *             <td>{@link String}</td>
+     *             <td>Source passed as is to {@link BigInteger#BigInteger(java.lang.String)}</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * </p>
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link BigInteger}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link BigInteger}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<BigInteger> getCoercedBigInteger(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToBigInteger);
     }
 
+    /**
+     * <p>
+     * Attempts to coerce the value of the column into a {@link BigInteger} using
+     * the following coercions.
+     * <table>
+     *     <thead>
+     *         <tr>
+     *             <th>#</th>
+     *             <th>Source Type</th>
+     *             <th>Conversion</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td>1</td>
+     *             <td>{@link BigInteger}</td>
+     *             <td>Returned as is</td>
+     *         </tr>
+     *         <tr>
+     *             <td>2</td>
+     *             <td>{@link BigDecimal}</td>
+     *             <td>{@link BigDecimal#toBigInteger()}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>3</td>
+     *             <td>All other {@link Number}</td>
+     *             <td>Source converted to {@link Number#longValue() long} passed to {@link BigInteger#valueOf(long)}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>4</td>
+     *             <td>{@link Boolean}</td>
+     *             <td>{@link Boolean#TRUE true} converted to {@link BigInteger#ONE}, {@link Boolean#FALSE false} converted to {@link BigInteger#ZERO}</td>
+     *         </tr>
+     *         <tr>
+     *             <td>5</td>
+     *             <td>{@link Character}</td>
+     *             <td>If {@link Character#isDigit(char)}, passed to {@link Character#digit(char, int)} with radix 10.</td>
+     *         </tr>
+     *         <tr>
+     *             <td>6</td>
+     *             <td>{@link String}</td>
+     *             <td>Source passed as is to {@link BigInteger#BigInteger(java.lang.String)}</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * </p>
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link BigInteger}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link BigInteger}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<BigInteger> getCoercedBigInteger(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToBigInteger);
     }
 
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link Boolean}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Boolean}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Boolean> getCoercedBoolean(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToBoolean);
     }
 
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link Boolean}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Boolean}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Boolean> getCoercedBoolean(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToBoolean);
     }
 
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link Byte} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Byte}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Byte> getCoercedByte(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToByte);
     }
 
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link Byte} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Byte}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Byte> getCoercedByte(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToByte);
@@ -270,7 +591,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<Array> getOptionalArray(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getArray(columnIndex));
+        return ofNullable(getArray(columnIndex));
     }
 
     /**
@@ -289,7 +610,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<Array> getOptionalArray(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getArray(columnLabel));
+        return ofNullable(getArray(columnLabel));
     }
 
     /**
@@ -305,7 +626,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<BigDecimal> getOptionalBigDecimal(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getBigDecimal(columnIndex));
+        return ofNullable(getBigDecimal(columnIndex));
     }
 
     /**
@@ -322,7 +643,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<BigDecimal> getOptionalBigDecimal(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getBigDecimal(columnLabel));
+        return ofNullable(getBigDecimal(columnLabel));
     }
 
     /**
@@ -340,7 +661,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<Blob> getOptionalBlob(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getBlob(columnIndex));
+        return ofNullable(getBlob(columnIndex));
     }
 
     /**
@@ -359,7 +680,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<Blob> getOptionalBlob(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getBlob(columnLabel));
+        return ofNullable(getBlob(columnLabel));
     }
 
     /**
@@ -377,8 +698,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Boolean> getOptionalBoolean(final int columnIndex) throws SQLException {
         final boolean value = getBoolean(columnIndex);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -397,8 +718,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Boolean> getOptionalBoolean(final String columnLabel) throws SQLException {
         final boolean value = getBoolean(columnLabel);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -416,8 +737,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Byte> getOptionalByte(final int columnIndex) throws SQLException {
         final byte value = getByte(columnIndex);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -436,8 +757,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Byte> getOptionalByte(final String columnLabel) throws SQLException {
         final byte value = getByte(columnLabel);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -453,7 +774,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<byte[]> getOptionalBytes(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getBytes(columnIndex));
+        return ofNullable(getBytes(columnIndex));
     }
 
     /**
@@ -470,7 +791,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<byte[]> getOptionalBytes(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getBytes(columnLabel));
+        return ofNullable(getBytes(columnLabel));
     }
 
     /**
@@ -488,7 +809,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<Clob> getOptionalClob(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getClob(columnIndex));
+        return ofNullable(getClob(columnIndex));
     }
 
     /**
@@ -506,7 +827,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<Clob> getOptionalClob(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getClob(columnLabel));
+        return ofNullable(getClob(columnLabel));
     }
 
     /**
@@ -522,7 +843,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<Date> getOptionalDate(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getDate(columnIndex));
+        return ofNullable(getDate(columnIndex));
     }
 
     /**
@@ -539,7 +860,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<Date> getOptionalDate(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getDate(columnLabel));
+        return ofNullable(getDate(columnLabel));
     }
 
     /**
@@ -558,7 +879,7 @@ public interface ResultSetEx extends ResultSet {
      */
     default Optional<Date> getOptionalDate(final int columnIndex, final Calendar cal)
             throws SQLException {
-        return Optional.ofNullable(getDate(columnIndex, cal));
+        return ofNullable(getDate(columnIndex, cal));
     }
 
     /**
@@ -578,7 +899,7 @@ public interface ResultSetEx extends ResultSet {
      */
     default Optional<Date> getOptionalDate(final String columnLabel, final Calendar cal)
             throws SQLException {
-        return Optional.ofNullable(getDate(columnLabel, cal));
+        return ofNullable(getDate(columnLabel, cal));
     }
 
     /**
@@ -596,8 +917,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Double> getOptionalDouble(final int columnIndex) throws SQLException {
         final double value = getDouble(columnIndex);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -616,8 +937,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Double> getOptionalDouble(final String columnLabel) throws SQLException {
         final double value = getDouble(columnLabel);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -635,8 +956,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Float> getOptionalFloat(final int columnIndex) throws SQLException {
         final float value = getFloat(columnIndex);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -655,8 +976,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Float> getOptionalFloat(final String columnLabel) throws SQLException {
         final float value = getFloat(columnLabel);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -674,8 +995,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Integer> getOptionalInt(final int columnIndex) throws SQLException {
         final int value = getInt(columnIndex);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -694,8 +1015,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Integer> getOptionalInt(final String columnLabel) throws SQLException {
         final int value = getInt(columnLabel);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     default Optional<Instant> getOptionalInstant(final int columnIndex) throws SQLException {
@@ -777,8 +1098,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Long> getOptionalLong(final int columnIndex) throws SQLException {
         final long value = getLong(columnIndex);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -797,8 +1118,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Long> getOptionalLong(final String columnLabel) throws SQLException {
         final long value = getLong(columnLabel);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -816,7 +1137,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<NClob> getOptionalNClob(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getNClob(columnIndex));
+        return ofNullable(getNClob(columnIndex));
     }
 
     /**
@@ -835,7 +1156,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<NClob> getOptionalNClob(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getNClob(columnLabel));
+        return ofNullable(getNClob(columnLabel));
     }
 
     /**
@@ -853,7 +1174,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<String> getOptionalNString(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getNString(columnIndex));
+        return ofNullable(getNString(columnIndex));
     }
 
     /**
@@ -872,7 +1193,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<String> getOptionalNString(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getNString(columnLabel));
+        return ofNullable(getNString(columnLabel));
     }
 
     /**
@@ -888,7 +1209,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<Object> getOptionalObject(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getObject(columnIndex));
+        return ofNullable(getObject(columnIndex));
     }
 
     /**
@@ -905,7 +1226,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<Object> getOptionalObject(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getObject(columnLabel));
+        return ofNullable(getObject(columnLabel));
     }
 
     /**
@@ -927,7 +1248,7 @@ public interface ResultSetEx extends ResultSet {
      */
     default Optional<Object> getOptionalObject(final int columnIndex, final Map<String,Class<?>> map)
             throws SQLException {
-        return Optional.ofNullable(getObject(columnIndex, map));
+        return ofNullable(getObject(columnIndex, map));
     }
 
     /**
@@ -950,7 +1271,7 @@ public interface ResultSetEx extends ResultSet {
      */
     default Optional<Object> getOptionalObject(final String columnLabel, final Map<String,Class<?>> map)
             throws SQLException {
-        return Optional.ofNullable(getObject(columnLabel, map));
+        return ofNullable(getObject(columnLabel, map));
     }
 
     /**
@@ -972,7 +1293,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default <T> Optional<T> getOptionalObject(final int columnIndex, final Class<T> type) throws SQLException {
-        return Optional.ofNullable(getObject(columnIndex, type));
+        return ofNullable(getObject(columnIndex, type));
     }
 
     /**
@@ -996,7 +1317,7 @@ public interface ResultSetEx extends ResultSet {
      */
     default <T> Optional<T> getOptionalObject(final String columnLabel, final Class<T> type)
             throws SQLException {
-        return Optional.ofNullable(getObject(columnLabel, type));
+        return ofNullable(getObject(columnLabel, type));
     }
 
     /**
@@ -1014,7 +1335,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<Ref> getOptionalRef(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getRef(columnIndex));
+        return ofNullable(getRef(columnIndex));
     }
 
     /**
@@ -1033,7 +1354,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<Ref> getOptionalRef(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getRef(columnLabel));
+        return ofNullable(getRef(columnLabel));
     }
 
     /**
@@ -1051,7 +1372,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<RowId> getOptionalRowId(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getRowId(columnIndex));
+        return ofNullable(getRowId(columnIndex));
     }
 
     /**
@@ -1070,7 +1391,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<RowId> getOptionalRowId(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getRowId(columnLabel));
+        return ofNullable(getRowId(columnLabel));
     }
 
     /**
@@ -1088,8 +1409,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Short> getOptionalShort(final int columnIndex) throws SQLException {
         final short value = getShort(columnIndex);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -1108,8 +1429,8 @@ public interface ResultSetEx extends ResultSet {
     default Optional<Short> getOptionalShort(final String columnLabel) throws SQLException {
         final short value = getShort(columnLabel);
         return wasNull()
-                ? Optional.empty()
-                : Optional.of(value);
+                ? empty()
+                : of(value);
     }
 
     /**
@@ -1127,7 +1448,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<SQLXML> getOptionalSQLXML(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getSQLXML(columnIndex));
+        return ofNullable(getSQLXML(columnIndex));
     }
 
     /**
@@ -1146,7 +1467,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<SQLXML> getOptionalSQLXML(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getSQLXML(columnLabel));
+        return ofNullable(getSQLXML(columnLabel));
     }
 
     /**
@@ -1162,7 +1483,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<String> getOptionalString(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getString(columnIndex));
+        return ofNullable(getString(columnIndex));
     }
 
     /**
@@ -1179,7 +1500,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<String> getOptionalString(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getString(columnLabel));
+        return ofNullable(getString(columnLabel));
     }
 
     /**
@@ -1195,7 +1516,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<Time> getOptionalTime(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getTime(columnIndex));
+        return ofNullable(getTime(columnIndex));
     }
 
     /**
@@ -1212,7 +1533,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<Time> getOptionalTime(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getTime(columnLabel));
+        return ofNullable(getTime(columnLabel));
     }
 
     /**
@@ -1231,7 +1552,7 @@ public interface ResultSetEx extends ResultSet {
      */
     default Optional<Time> getOptionalTime(final int columnIndex, final Calendar cal)
             throws SQLException {
-        return Optional.ofNullable(getTime(columnIndex, cal));
+        return ofNullable(getTime(columnIndex, cal));
     }
 
     /**
@@ -1251,7 +1572,7 @@ public interface ResultSetEx extends ResultSet {
      */
     default Optional<Time> getOptionalTime(final String columnLabel, final Calendar cal)
             throws SQLException {
-        return Optional.ofNullable(getTime(columnLabel, cal));
+        return ofNullable(getTime(columnLabel, cal));
     }
 
     /**
@@ -1267,7 +1588,7 @@ public interface ResultSetEx extends ResultSet {
      *          called on a closed result set
      */
     default Optional<Timestamp> getOptionalTimestamp(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getTimestamp(columnIndex));
+        return ofNullable(getTimestamp(columnIndex));
     }
 
     /**
@@ -1285,7 +1606,7 @@ public interface ResultSetEx extends ResultSet {
      */
     default Optional<Timestamp> getOptionalTimestamp(final String columnLabel)
             throws SQLException {
-        return Optional.ofNullable(getTimestamp(columnLabel));
+        return ofNullable(getTimestamp(columnLabel));
     }
 
     /**
@@ -1304,7 +1625,7 @@ public interface ResultSetEx extends ResultSet {
      */
     default Optional<Timestamp> getOptionalTimestamp(final int columnIndex, final Calendar cal)
             throws SQLException {
-        return Optional.ofNullable(getTimestamp(columnIndex, cal));
+        return ofNullable(getTimestamp(columnIndex, cal));
     }
 
     /**
@@ -1324,7 +1645,7 @@ public interface ResultSetEx extends ResultSet {
      */
     default Optional<Timestamp> getOptionalTimestamp(final String columnLabel, final Calendar cal)
             throws SQLException {
-        return Optional.ofNullable(getTimestamp(columnLabel, cal));
+        return ofNullable(getTimestamp(columnLabel, cal));
     }
 
     /**
@@ -1342,7 +1663,7 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<URL> getOptionalURL(final int columnIndex) throws SQLException {
-        return Optional.ofNullable(getURL(columnIndex));
+        return ofNullable(getURL(columnIndex));
     }
 
     /**
@@ -1361,6 +1682,6 @@ public interface ResultSetEx extends ResultSet {
      *          if the JDBC driver does not support this method
      */
     default Optional<URL> getOptionalURL(final String columnLabel) throws SQLException {
-        return Optional.ofNullable(getURL(columnLabel));
+        return ofNullable(getURL(columnLabel));
     }
 }
