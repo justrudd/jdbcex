@@ -66,8 +66,22 @@ public class Coercions_LocalDateTest {
     }
 
     @Test
+    public void stringValueIsProperlyCoerced() {
+        final String value = "1976-07-04";
+        final Optional<LocalDate> opt = coerceToLocalDate(value);
+        assertThat(opt).isPresentAndEqualTo(LocalDate.of(1976, 7, 4));
+    }
+
+    @Test
+    public void badStringIsEmptyValue() {
+        final String value = "hello world";
+        final Optional<LocalDate> opt = coerceToLocalDate(value);
+        assertThat(opt).isEmpty();
+    }
+
+    @Test
     public void emptyWhenUnexpectedTypeCoerced() {
-        final String value = "blah blah";
+        final Byte value = 1;
         final Optional<LocalDate> opt = coerceToLocalDate(value);
         assertThat(opt).isEmpty();
     }

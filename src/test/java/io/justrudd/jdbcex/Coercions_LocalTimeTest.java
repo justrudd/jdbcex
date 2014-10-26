@@ -66,8 +66,22 @@ public class Coercions_LocalTimeTest {
     }
 
     @Test
+    public void stringValueIsProperlyCoerced() {
+        final String value = "10:00:30";
+        final Optional<LocalTime> opt = coerceToLocalTime(value);
+        assertThat(opt).isPresentAndEqualTo(LocalTime.of(10, 0, 30));
+    }
+
+    @Test
+    public void badStringIsEmptyValue() {
+        final String value = "hello world";
+        final Optional<LocalTime> opt = coerceToLocalTime(value);
+        assertThat(opt).isEmpty();
+    }
+
+    @Test
     public void emptyWhenUnexpectedTypeCoerced() {
-        final String value = "blah blah";
+        final Byte value = 1;
         final Optional<LocalTime> opt = coerceToLocalTime(value);
         assertThat(opt).isEmpty();
     }

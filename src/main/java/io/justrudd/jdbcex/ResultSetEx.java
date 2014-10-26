@@ -56,7 +56,8 @@ import static java.util.Optional.ofNullable;
 
 /**
  * An extension to the standard ResultSet which adds the ability to retrieve Optionals
- * instead of nulls and adds the ability to have coercions done where needed.
+ * instead of nulls, adds the ability to have coercions done where needed, and adds
+ * getter methods for the new Java 8 Date/Time types.
  */
 public interface ResultSetEx extends ResultSet {
 

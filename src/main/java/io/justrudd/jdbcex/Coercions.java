@@ -32,15 +32,18 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static io.justrudd.jdbcex.typeof.TypeOf.whenTypeOf;
 import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 import static java.util.function.Function.identity;
-import static io.justrudd.jdbcex.typeof.TypeOf.whenTypeOf;
 
 final class Coercions {
 
@@ -166,6 +169,23 @@ final class Coercions {
         return ofNullable(result);
     }
 
+    static Optional<Instant> coerceToInstant(final Object o) {
+        if (o == null) {
+            return empty();
+        }
+
+        final Instant result =
+                whenTypeOf(o)
+                    .is(Instant.class).thenReturn(identity())
+                    .is(Timestamp.class).thenReturn(Timestamp::toInstant)
+                    .is(Integer.class).thenReturn(i -> Instant.ofEpochSecond(i.longValue()))
+                    .is(Long.class).thenReturn(Instant::ofEpochMilli)
+                    .is(String.class).thenReturn(Conv::stringToInstant)
+                    .orElse(Conv::nullValue);
+
+        return ofNullable(result);
+    }
+
     static Optional<Integer> coerceToInteger(final Object o) {
         if (o == null) {
             return empty();
@@ -193,6 +213,23 @@ final class Coercions {
                     .is(LocalDate.class).thenReturn(identity())
                     .is(Date.class).thenReturn(Date::toLocalDate)
                     .is(Timestamp.class).thenReturn(ts -> ts.toLocalDateTime().toLocalDate())
+                    .is(String.class).thenReturn(Conv::stringToLocalDate)
+                    .orElse(Conv::nullValue);
+
+        return ofNullable(result);
+    }
+
+    static Optional<LocalDateTime> coerceToLocalDateTime(final Object o) {
+        if (o == null) {
+            return empty();
+        }
+
+        final LocalDateTime result =
+                whenTypeOf(o)
+                    .is(LocalDateTime.class).thenReturn(identity())
+                    .is(Timestamp.class).thenReturn(Timestamp::toLocalDateTime)
+                    .is(Date.class).thenReturn(d -> LocalDateTime.of(d.toLocalDate(), LocalTime.MIDNIGHT))
+                    .is(String.class).thenReturn(Conv::stringToLocalDateTime)
                     .orElse(Conv::nullValue);
 
         return ofNullable(result);
@@ -208,6 +245,7 @@ final class Coercions {
                     .is(LocalTime.class).thenReturn(identity())
                     .is(Time.class).thenReturn(Time::toLocalTime)
                     .is(Timestamp.class).thenReturn(ts -> ts.toLocalDateTime().toLocalTime())
+                    .is(String.class).thenReturn(Conv::stringToLocalTime)
                     .orElse(Conv::nullValue);
 
         return ofNullable(result);
@@ -322,11 +360,11 @@ final class Coercions {
         }
 
         static BigDecimal stringToBigDecimal(final String s) {
-            return stringToT(s, BigDecimal::new);
+            return stringToNumericT(s, BigDecimal::new);
         }
 
         static BigInteger stringToBigInteger(final String s) {
-            return stringToT(s, BigInteger::new);
+            return stringToNumericT(s, BigInteger::new);
         }
 
         static Boolean stringToBoolean(final String s) {
@@ -347,30 +385,57 @@ final class Coercions {
         }
 
         static Byte stringToByte(final String s) {
-            return stringToT(s, Byte::parseByte);
+            return stringToNumericT(s, Byte::parseByte);
         }
 
         static Double stringToDouble(final String s) {
-            return stringToT(s, Double::parseDouble);
+            return stringToNumericT(s, Double::parseDouble);
         }
 
         static Float stringToFloat(final String s) {
-            return stringToT(s, Float::parseFloat);
+            return stringToNumericT(s, Float::parseFloat);
+        }
+
+        static Instant stringToInstant(final String s) {
+            return stringToTimeT(s, Instant::parse);
         }
 
         static Integer stringToInteger(final String s) {
-            return stringToT(s, Integer::parseInt);
+            return stringToNumericT(s, Integer::parseInt);
+        }
+
+        static LocalDate stringToLocalDate(final String s) {
+            return stringToTimeT(s, LocalDate::parse);
+        }
+
+        static LocalDateTime stringToLocalDateTime(final String s) {
+            return stringToTimeT(s, LocalDateTime::parse);
+        }
+
+        static LocalTime stringToLocalTime(final String s) {
+            return stringToTimeT(s, LocalTime::parse);
         }
 
         static Long stringToLong(final String s) {
-            return stringToT(s, Long::parseLong);
+            return stringToNumericT(s, Long::parseLong);
         }
 
         static Short stringToShort(final String s) {
-            return stringToT(s, Short::parseShort);
+            return stringToNumericT(s, Short::parseShort);
         }
 
-        private static <T> T stringToT(final String s, final Function<String, T> toT) {
+        private static <T> T stringToTimeT(final String s, final Function<String, T> toT) {
+            T temp;
+            try {
+                temp = toT.apply(s);
+            }
+            catch (DateTimeParseException ex) {
+                temp = null;
+            }
+            return temp;
+        }
+
+        private static <T> T stringToNumericT(final String s, final Function<String, T> toT) {
             T temp;
             try {
                 temp = toT.apply(s);
