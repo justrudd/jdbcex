@@ -1129,6 +1129,90 @@ public class ResultSetExImplTest {
     }
 
     @Test
+    public void emptyOptionalInstantReturnedByIndex() throws SQLException {
+        when(mockResultSet.getTimestamp(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getOptionalInstant(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyOptionalInstantReturnedByName() throws SQLException {
+        when(mockResultSet.getTimestamp(anyString())).thenReturn(null);
+
+        assertThat(resultSetEx.getOptionalInstant(anyColumnName)).isEmpty();
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnName));
+    }
+
+    @Test
+    public void presentOptionalInstantReturnedByIndex() throws SQLException {
+        final Instant now = Instant.now();
+        final Timestamp anyTimestamp = Timestamp.from(now);
+        when(mockResultSet.getTimestamp(anyInt())).thenReturn(anyTimestamp);
+
+        assertThat(resultSetEx.getOptionalInstant(anyColumnIndex)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentOptionalInstantReturnedByName() throws SQLException {
+        final Instant now = Instant.now();
+        final Timestamp anyTimestamp = Timestamp.from(now);
+        when(mockResultSet.getTimestamp(anyString())).thenReturn(anyTimestamp);
+
+        assertThat(resultSetEx.getOptionalInstant(anyColumnName)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyOptionalInstantReturnedByIndexAndCal() throws SQLException {
+        when(mockResultSet.getTimestamp(anyInt(), any(Calendar.class))).thenReturn(null);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalInstant(anyColumnIndex, theCalendar)).isEmpty();
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnIndex), same(theCalendar));
+    }
+
+    @Test
+    public void emptyOptionalInstantReturnedByNameAndCal() throws SQLException {
+        when(mockResultSet.getTimestamp(anyString(), any(Calendar.class))).thenReturn(null);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalInstant(anyColumnName, theCalendar)).isEmpty();
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnName), same(theCalendar));
+    }
+
+    @Test
+    public void presentOptionalInstantReturnedByIndexAndCal() throws SQLException {
+        final Instant now = Instant.now();
+        final Timestamp anyTimestamp = Timestamp.from(now);
+        when(mockResultSet.getTimestamp(anyInt(), any(Calendar.class))).thenReturn(anyTimestamp);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalInstant(anyColumnIndex, theCalendar)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnIndex), same(theCalendar));
+    }
+
+    @Test
+    public void presentOptionalInstantReturnedByNameAndCal() throws SQLException {
+        final Instant now = Instant.now();
+        final Timestamp anyTimestamp = Timestamp.from(now);
+        when(mockResultSet.getTimestamp(anyString(), any(Calendar.class))).thenReturn(anyTimestamp);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalInstant(anyColumnName, theCalendar)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnName), same(theCalendar));
+    }
+
+    @Test
     public void emptyOptionalIntReturnedByIndex() throws SQLException {
         when(mockResultSet.getInt(anyInt())).thenReturn(0);
         when(mockResultSet.wasNull()).thenReturn(IS_NULL);

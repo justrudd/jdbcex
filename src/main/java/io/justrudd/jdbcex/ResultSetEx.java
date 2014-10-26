@@ -1500,45 +1500,6 @@ public interface ResultSetEx extends ResultSet {
     }
 
     /**
-     * See {@link ResultSet#getInt(int)} for the basics of this method.
-     *
-     * @param columnIndex
-     *          the first column is 1, the second is 2, ...
-     * @return
-     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
-     *          {@link Optional#empty() empty}.
-     * @exception SQLException
-     *          if the columnIndex is not valid; if a database access error occurs or this method is
-     *          called on a closed result set
-     */
-    default Optional<Integer> getOptionalInt(final int columnIndex) throws SQLException {
-        final int value = getInt(columnIndex);
-        return wasNull()
-                ? empty()
-                : of(value);
-    }
-
-    /**
-     * See {@link ResultSet#getInt(String)} for the basics of this method.
-     *
-     * @param columnLabel
-     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
-     *          was not specified, then the label is the name of the column
-     * @return
-     *          the column value; if the value is SQL <code>NULL</code>, the value
-     *          {@link Optional#empty() empty} is returned.
-     * @exception SQLException
-     *          if the columnLabel is not valid; if a database access error occurs or this method is
-     *          called on a closed result set
-     */
-    default Optional<Integer> getOptionalInt(final String columnLabel) throws SQLException {
-        final int value = getInt(columnLabel);
-        return wasNull()
-                ? empty()
-                : of(value);
-    }
-
-    /**
      * Retrieves the value of the designated column in the current row
      * of this {@code ResultSet} object as an {@code Instant}.
      *
@@ -1614,6 +1575,45 @@ public interface ResultSetEx extends ResultSet {
      */
     default Optional<Instant> getOptionalInstant(final String columnLabel, final Calendar cal) throws SQLException {
         return getOptionalTimestamp(columnLabel, cal).map(Timestamp::toInstant);
+    }
+
+    /**
+     * See {@link ResultSet#getInt(int)} for the basics of this method.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
+    default Optional<Integer> getOptionalInt(final int columnIndex) throws SQLException {
+        final int value = getInt(columnIndex);
+        return wasNull()
+                ? empty()
+                : of(value);
+    }
+
+    /**
+     * See {@link ResultSet#getInt(String)} for the basics of this method.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned.
+     * @exception SQLException
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
+    default Optional<Integer> getOptionalInt(final String columnLabel) throws SQLException {
+        final int value = getInt(columnLabel);
+        return wasNull()
+                ? empty()
+                : of(value);
     }
 
     /**
