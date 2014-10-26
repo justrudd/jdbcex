@@ -416,161 +416,609 @@ public interface ResultSetEx extends ResultSet {
                 .flatMap(Coercions::coerceToByte);
     }
 
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link Character} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Character}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Character> getCoercedCharacter(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToCharacter);
     }
 
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link Character}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Character}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Character> getCoercedCharacter(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToCharacter);
     }
 
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link Double} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Double}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Double> getCoercedDouble(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToDouble);
     }
 
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link Double}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Double}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Double> getCoercedDouble(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToDouble);
     }
 
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link Float} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Float}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Float> getCoercedFloat(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToFloat);
     }
 
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link Float}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Float}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Float> getCoercedFloat(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToFloat);
     }
 
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link Integer} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Integer}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Integer> getCoercedInteger(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToInteger);
     }
 
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link Integer}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Integer}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Integer> getCoercedInteger(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToInteger);
     }
 
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link LocalDate} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link LocalDate}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<LocalDate> getCoercedLocalDate(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToLocalDate);
     }
 
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link LocalDate}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link LocalDate}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<LocalDate> getCoercedLocalDate(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToLocalDate);
     }
 
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link LocalTime} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link LocalTime}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<LocalTime> getCoercedLocalTime(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToLocalTime);
     }
 
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link LocalTime}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link LocalTime}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<LocalTime> getCoercedLocalTime(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToLocalTime);
     }
 
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link Long} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Long}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Long> getCoercedLong(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToLong);
     }
 
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link Long}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Long}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Long> getCoercedLong(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToLong);
     }
 
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link Short} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Short}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Short> getCoercedShort(final int columnIndex) throws SQLException {
         return getOptionalObject(columnIndex)
                 .flatMap(Coercions::coerceToShort);
     }
 
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link Short}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Short}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
     default Optional<Short> getCoercedShort(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToShort);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as an {@code Instant}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toInstant()
+     */
     default Instant getInstant(final int columnIndex) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalInstant(columnIndex).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as an {@code Instant}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toInstant()
+     */
     default Instant getInstant(final String columnLabel) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalInstant(columnLabel).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as an {@code Instant}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toInstant()
+     */
     default Instant getInstant(final int columnIndex, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalInstant(columnIndex, cal).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as an {@code Instant}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toInstant()
+     */
     default Instant getInstant(final String columnLabel, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalInstant(columnLabel, cal).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDate}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Date#toLocalDate()
+     */
     default LocalDate getLocalDate(final int columnIndex) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalDate(columnIndex).orElse(null);
     }
 
-    default LocalDate getLocalDate(final String columName) throws SQLException {
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDate}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Date#toLocalDate()
+     */
+    default LocalDate getLocalDate(final String columnLabel) throws SQLException {
         // emulate normal JDBC calls which return null
-        return getOptionalLocalDate(columName).orElse(null);
+        return getOptionalLocalDate(columnLabel).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDate}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Date#toLocalDate()
+     */
     default LocalDate getLocalDate(final int columnIndex, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalDate(columnIndex, cal).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDate}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Date#toLocalDate()
+     */
     default LocalDate getLocalDate(final String columnLabel, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalDate(columnLabel, cal).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDateTime}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toLocalDateTime()
+     */
     default LocalDateTime getLocalDateTime(final int columnIndex) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalDateTime(columnIndex).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDateTime}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toLocalDateTime()
+     */
     default LocalDateTime getLocalDateTime(final String columnLabel) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalDateTime(columnLabel).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDateTime}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toLocalDateTime()
+     */
     default LocalDateTime getLocalDateTime(final int columnIndex, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalDateTime(columnIndex, cal).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDateTime}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toLocalDateTime()
+     */
     default LocalDateTime getLocalDateTime(final String columnLabel, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalDateTime(columnLabel, cal).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalTime}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Time#toLocalTime()
+     */
     default LocalTime getLocalTime(final int columnIndex) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalTime(columnIndex).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalTime}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Time#toLocalTime()
+     */
     default LocalTime getLocalTime(final String columnLabel) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalTime(columnLabel).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalTime}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Time#toLocalTime()
+     */
     default LocalTime getLocalTime(final int columnIndex, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalTime(columnIndex, cal).orElse(null);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalTime}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@code null} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Time#toLocalTime()
+     */
     default LocalTime getLocalTime(final String columnLabel, final Calendar cal) throws SQLException {
         // emulate normal JDBC calls which return null
         return getOptionalLocalTime(columnLabel, cal).orElse(null);
@@ -1019,66 +1467,314 @@ public interface ResultSetEx extends ResultSet {
                 : of(value);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as an {@code Instant}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toInstant()
+     */
     default Optional<Instant> getOptionalInstant(final int columnIndex) throws SQLException {
         return getOptionalTimestamp(columnIndex).map(Timestamp::toInstant);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as an {@code Instant}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned.
+     * @exception SQLException
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toInstant()
+     */
     default Optional<Instant> getOptionalInstant(final String columnLabel) throws SQLException {
         return getOptionalTimestamp(columnLabel).map(Timestamp::toInstant);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as an {@code Instant}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toInstant()
+     */
     default Optional<Instant> getOptionalInstant(final int columnIndex, final Calendar cal) throws SQLException {
         return getOptionalTimestamp(columnIndex, cal).map(Timestamp::toInstant);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as an {@code Instant}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned.
+     * @exception SQLException
+     *          if the columnLabel is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toInstant()
+     */
     default Optional<Instant> getOptionalInstant(final String columnLabel, final Calendar cal) throws SQLException {
         return getOptionalTimestamp(columnLabel, cal).map(Timestamp::toInstant);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDate}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Date#toLocalDate()
+     */
     default Optional<LocalDate> getOptionalLocalDate(final int columnIndex) throws SQLException {
         return getOptionalDate(columnIndex).map(Date::toLocalDate);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDate}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Date#toLocalDate()
+     */
     default Optional<LocalDate> getOptionalLocalDate(final String columnLabel) throws SQLException {
         return getOptionalDate(columnLabel).map(Date::toLocalDate);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDate}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Date#toLocalDate()
+     */
     default Optional<LocalDate> getOptionalLocalDate(final int columnIndex, final Calendar cal) throws SQLException {
         return getOptionalDate(columnIndex, cal).map(Date::toLocalDate);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDate}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Date#toLocalDate()
+     */
     default Optional<LocalDate> getOptionalLocalDate(final String columnLabel, final Calendar cal) throws SQLException {
         return getOptionalDate(columnLabel, cal).map(Date::toLocalDate);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDateTime}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toLocalDateTime()
+     */
     default Optional<LocalDateTime> getOptionalLocalDateTime(final int columnIndex) throws SQLException {
         return getOptionalTimestamp(columnIndex).map(Timestamp::toLocalDateTime);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDateTime}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toLocalDateTime()
+     */
     default Optional<LocalDateTime> getOptionalLocalDateTime(final String columnLabel) throws SQLException {
         return getOptionalTimestamp(columnLabel).map(Timestamp::toLocalDateTime);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDateTime}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toLocalDateTime()
+     */
     default Optional<LocalDateTime> getOptionalLocalDateTime(final int columnIndex, final Calendar cal) throws SQLException {
         return getOptionalTimestamp(columnIndex, cal).map(Timestamp::toLocalDateTime);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalDateTime}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Timestamp#toLocalDateTime()
+     */
     default Optional<LocalDateTime> getOptionalLocalDateTime(final String columnLabel, final Calendar cal) throws SQLException {
         return getOptionalTimestamp(columnLabel, cal).map(Timestamp::toLocalDateTime);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalTime}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Time#toLocalTime()
+     */
     default Optional<LocalTime> getOptionalLocalTime(final int columnIndex) throws SQLException {
         return getOptionalTime(columnIndex).map(Time::toLocalTime);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalTime}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Time#toLocalTime()
+     */
     default Optional<LocalTime> getOptionalLocalTime(final String columnLabel) throws SQLException {
         return getOptionalTime(columnLabel).map(Time::toLocalTime);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalTime}.
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Time#toLocalTime()
+     */
     default Optional<LocalTime> getOptionalLocalTime(final int columnIndex, final Calendar cal) throws SQLException {
         return getOptionalTime(columnIndex, cal).map(Time::toLocalTime);
     }
 
+    /**
+     * Retrieves the value of the designated column in the current row
+     * of this {@code ResultSet} object as a {@code LocalTime}.
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @param cal
+     *          the <code>java.util.Calendar</code> object to use in constructing the date
+     * @return
+     *          the column value; if the value is SQL <code>NULL</code>, the value returned is
+     *          {@link Optional#empty() empty}.
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     * @see java.sql.Time#toLocalTime()
+     */
     default Optional<LocalTime> getOptionalLocalTime(final String columnLabel, final Calendar cal) throws SQLException {
         return getOptionalTime(columnLabel, cal).map(Time::toLocalTime);
     }
