@@ -1267,6 +1267,262 @@ public class ResultSetExImplTest {
     }
 
     @Test
+    public void emptyOptionalLocalDateReturnedByIndex() throws SQLException {
+        when(mockResultSet.getDate(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getOptionalLocalDate(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getDate(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyOptionalLocalDateReturnedByName() throws SQLException {
+        when(mockResultSet.getDate(anyString())).thenReturn(null);
+
+        assertThat(resultSetEx.getOptionalLocalDate(anyColumnName)).isEmpty();
+
+        verify(mockResultSet, only()).getDate(eq(anyColumnName));
+    }
+
+    @Test
+    public void presentOptionalLocalDateReturnedByIndex() throws SQLException {
+        final LocalDate now = LocalDate.now();
+        final Date anyDate = Date.valueOf(now);
+        when(mockResultSet.getDate(anyInt())).thenReturn(anyDate);
+
+        assertThat(resultSetEx.getOptionalLocalDate(anyColumnIndex)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getDate(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentOptionalLocalDateReturnedByName() throws SQLException {
+        final LocalDate now = LocalDate.now();
+        final Date anyDate = Date.valueOf(now);
+        when(mockResultSet.getDate(anyString())).thenReturn(anyDate);
+
+        assertThat(resultSetEx.getOptionalLocalDate(anyColumnName)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getDate(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyOptionalLocalDateReturnedByIndexAndCal() throws SQLException {
+        when(mockResultSet.getDate(anyInt(), any(Calendar.class))).thenReturn(null);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalDate(anyColumnIndex, theCalendar)).isEmpty();
+
+        verify(mockResultSet, only()).getDate(eq(anyColumnIndex), same(theCalendar));
+    }
+
+    @Test
+    public void emptyOptionalLocalDateReturnedByNameAndCal() throws SQLException {
+        when(mockResultSet.getDate(anyString(), any(Calendar.class))).thenReturn(null);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalDate(anyColumnName, theCalendar)).isEmpty();
+
+        verify(mockResultSet, only()).getDate(eq(anyColumnName), same(theCalendar));
+    }
+
+    @Test
+    public void presentOptionalLocalDateReturnedByIndexAndCal() throws SQLException {
+        final LocalDate now = LocalDate.now();
+        final Date anyDate = Date.valueOf(now);
+        when(mockResultSet.getDate(anyInt(), any(Calendar.class))).thenReturn(anyDate);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalDate(anyColumnIndex, theCalendar))
+                .isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getDate(eq(anyColumnIndex), same(theCalendar));
+    }
+
+    @Test
+    public void presentOptionalLocalDateReturnedByNameAndCal() throws SQLException {
+        final LocalDate now = LocalDate.now();
+        final Date anyDate = Date.valueOf(now);
+        when(mockResultSet.getDate(anyString(), any(Calendar.class))).thenReturn(anyDate);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalDate(anyColumnName, theCalendar))
+                .isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getDate(eq(anyColumnName), same(theCalendar));
+    }
+
+    @Test
+    public void emptyOptionalLocalDateTimeReturnedByIndex() throws SQLException {
+        when(mockResultSet.getTimestamp(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getOptionalLocalDateTime(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyOptionalLocalDateTimeReturnedByName() throws SQLException {
+        when(mockResultSet.getTimestamp(anyString())).thenReturn(null);
+
+        assertThat(resultSetEx.getOptionalLocalDateTime(anyColumnName)).isEmpty();
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnName));
+    }
+
+    @Test
+    public void presentOptionalLocalDateTimeReturnedByIndex() throws SQLException {
+        final LocalDateTime now = LocalDateTime.now();
+        final Timestamp anyTimestamp = Timestamp.valueOf(now);
+        when(mockResultSet.getTimestamp(anyInt())).thenReturn(anyTimestamp);
+
+        assertThat(resultSetEx.getOptionalLocalDateTime(anyColumnIndex)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentOptionalLocalDateTimeReturnedByName() throws SQLException {
+        final LocalDateTime now = LocalDateTime.now();
+        final Timestamp anyTimestamp = Timestamp.valueOf(now);
+        when(mockResultSet.getTimestamp(anyString())).thenReturn(anyTimestamp);
+
+        assertThat(resultSetEx.getOptionalLocalDateTime(anyColumnName)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyOptionalLocalDateTimeReturnedByIndexAndCal() throws SQLException {
+        when(mockResultSet.getTimestamp(anyInt(), any(Calendar.class))).thenReturn(null);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalDateTime(anyColumnIndex, theCalendar)).isEmpty();
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnIndex), same(theCalendar));
+    }
+
+    @Test
+    public void emptyOptionalLocalDateTimeReturnedByNameAndCal() throws SQLException {
+        when(mockResultSet.getTimestamp(anyString(), any(Calendar.class))).thenReturn(null);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalDateTime(anyColumnName, theCalendar)).isEmpty();
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnName), same(theCalendar));
+    }
+
+    @Test
+    public void presentOptionalLocalDateTimeReturnedByIndexAndCal() throws SQLException {
+        final LocalDateTime now = LocalDateTime.now();
+        final Timestamp anyTimestamp = Timestamp.valueOf(now);
+        when(mockResultSet.getTimestamp(anyInt(), any(Calendar.class))).thenReturn(anyTimestamp);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalDateTime(anyColumnIndex, theCalendar)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnIndex), same(theCalendar));
+    }
+
+    @Test
+    public void presentOptionalLocalDateTimeReturnedByNameAndCal() throws SQLException {
+        final LocalDateTime now = LocalDateTime.now();
+        final Timestamp anyTimestamp = Timestamp.valueOf(now);
+        when(mockResultSet.getTimestamp(anyString(), any(Calendar.class))).thenReturn(anyTimestamp);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalDateTime(anyColumnName, theCalendar)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTimestamp(eq(anyColumnName), same(theCalendar));
+    }
+
+    @Test
+    public void emptyOptionalLocalTimeReturnedByIndex() throws SQLException {
+        when(mockResultSet.getTime(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getOptionalLocalTime(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getTime(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyOptionalLocalTimeReturnedByName() throws SQLException {
+        when(mockResultSet.getTime(anyString())).thenReturn(null);
+
+        assertThat(resultSetEx.getOptionalLocalTime(anyColumnName)).isEmpty();
+
+        verify(mockResultSet, only()).getTime(eq(anyColumnName));
+    }
+
+    @Test
+    public void presentOptionalLocalTimeReturnedByIndex() throws SQLException {
+        final LocalTime now = LocalTime.now().withNano(0);
+        final Time anyTime = Time.valueOf(now);
+        when(mockResultSet.getTime(anyInt())).thenReturn(anyTime);
+
+        assertThat(resultSetEx.getOptionalLocalTime(anyColumnIndex)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTime(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentOptionalLocalTimeReturnedByName() throws SQLException {
+        final LocalTime now = LocalTime.now().withNano(0);
+        final Time anyTime = Time.valueOf(now);
+        when(mockResultSet.getTime(anyString())).thenReturn(anyTime);
+
+        assertThat(resultSetEx.getOptionalLocalTime(anyColumnName)).isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTime(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyOptionalLocalTimeReturnedByIndexAndCal() throws SQLException {
+        when(mockResultSet.getTime(anyInt(), any(Calendar.class))).thenReturn(null);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalTime(anyColumnIndex, theCalendar)).isEmpty();
+
+        verify(mockResultSet, only()).getTime(eq(anyColumnIndex), same(theCalendar));
+    }
+
+    @Test
+    public void emptyOptionalLocalTimeReturnedByNameAndCal() throws SQLException {
+        when(mockResultSet.getTime(anyString(), any(Calendar.class))).thenReturn(null);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalTime(anyColumnName, theCalendar)).isEmpty();
+
+        verify(mockResultSet, only()).getTime(eq(anyColumnName), same(theCalendar));
+    }
+
+    @Test
+    public void presentOptionalLocalTimeReturnedByIndexAndCal() throws SQLException {
+        final LocalTime now = LocalTime.now().withNano(0);
+        final Time anyTime = Time.valueOf(now);
+        when(mockResultSet.getTime(anyInt(), any(Calendar.class))).thenReturn(anyTime);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalTime(anyColumnIndex, theCalendar))
+                .isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTime(eq(anyColumnIndex), same(theCalendar));
+    }
+
+    @Test
+    public void presentOptionalLocalTimeReturnedByNameAndCal() throws SQLException {
+        final LocalTime now = LocalTime.now().withNano(0);
+        final Time anyTime = Time.valueOf(now);
+        when(mockResultSet.getTime(anyString(), any(Calendar.class))).thenReturn(anyTime);
+
+        final Calendar theCalendar = Calendar.getInstance();
+        assertThat(resultSetEx.getOptionalLocalTime(anyColumnName, theCalendar))
+                .isPresentAndEqualTo(now);
+
+        verify(mockResultSet, only()).getTime(eq(anyColumnName), same(theCalendar));
+    }
+
+    @Test
     public void emptyOptionalLongReturnedByIndex() throws SQLException {
         when(mockResultSet.getLong(anyInt())).thenReturn(0L);
         when(mockResultSet.wasNull()).thenReturn(IS_NULL);
