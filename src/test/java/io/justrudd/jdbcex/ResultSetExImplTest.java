@@ -32,6 +32,7 @@ import org.junit.Test;
 import org.mockito.InOrder;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Array;
@@ -48,6 +49,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -82,6 +84,557 @@ public class ResultSetExImplTest {
         anyColumnIndex = RANDOM.nextInt(10) + 1;
         anyColumnName = Long.toHexString(RANDOM.nextLong());
     }
+
+    @Test
+    public void emptyCoercedBigDecimalReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedBigDecimal(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedBigDecimalReturnedByIndex() throws SQLException {
+        final BigDecimal value = BigDecimal.TEN;
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedBigDecimal(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedBigDecimalReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedBigDecimal(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedBigDecimalReturnedByName() throws SQLException {
+        final BigDecimal value = BigDecimal.TEN;
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedBigDecimal(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedBigIntegerReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedBigInteger(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedBigIntegerReturnedByIndex() throws SQLException {
+        final BigInteger value = BigInteger.TEN;
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedBigInteger(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedBigIntegerReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedBigInteger(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedBigIntegerReturnedByName() throws SQLException {
+        final BigInteger value = BigInteger.TEN;
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedBigInteger(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedBooleanReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedBoolean(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedBooleanReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(Boolean.FALSE);
+
+        assertThat(resultSetEx.getCoercedBoolean(anyColumnIndex)).isPresentAndEqualTo(Boolean.FALSE);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedBooleanReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedBoolean(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedBooleanReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyString())).thenReturn(Boolean.TRUE);
+
+        assertThat(resultSetEx.getCoercedBoolean(anyColumnName)).isPresentAndEqualTo(Boolean.TRUE);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedByteReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedByte(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedByteReturnedByIndex() throws SQLException {
+        final Byte value = (byte)128;
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedByte(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedByteReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedByte(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedByteReturnedByName() throws SQLException {
+        final Byte value = (byte)127;
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedByte(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedCharacterReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedCharacter(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedCharacterReturnedByIndex() throws SQLException {
+        final Character value = 'j';
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedCharacter(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedCharacterReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedCharacter(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedCharacterReturnedByName() throws SQLException {
+        final Character value = 'r';
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedCharacter(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedDoubleReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedDouble(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedDoubleReturnedByIndex() throws SQLException {
+        final Double value = Math.PI;
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedDouble(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedDoubleReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedDouble(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedDoubleReturnedByName() throws SQLException {
+        final Double value = Math.E;
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedDouble(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedFloatReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedFloat(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedFloatReturnedByIndex() throws SQLException {
+        final Float value = (float)Math.PI;
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedFloat(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedFloatReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedFloat(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedFloatReturnedByName() throws SQLException {
+        final Float value = (float)Math.E;
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedFloat(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedIntegerReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedInteger(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedIntegerReturnedByIndex() throws SQLException {
+        final Integer value = 1976;
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedInteger(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedIntegerReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedInteger(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedIntegerReturnedByName() throws SQLException {
+        final Integer value = 1988;
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedInteger(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedInstantReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedInstant(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedInstantReturnedByIndex() throws SQLException {
+        final Instant value = Instant.now();
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedInstant(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedInstantReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedInstant(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedInstantReturnedByName() throws SQLException {
+        final Instant value = Instant.now();
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedInstant(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedLocalDateReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedLocalDate(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedLocalDateReturnedByIndex() throws SQLException {
+        final LocalDate value = LocalDate.now();
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedLocalDate(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedLocalDateReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedLocalDate(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedLocalDateReturnedByName() throws SQLException {
+        final LocalDate value = LocalDate.now();
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedLocalDate(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedLocalDateTimeReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedLocalDateTime(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedLocalDateTimeReturnedByIndex() throws SQLException {
+        final LocalDateTime value = LocalDateTime.now();
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedLocalDateTime(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedLocalDateTimeReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedLocalDateTime(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedLocalDateTimeReturnedByName() throws SQLException {
+        final LocalDateTime value = LocalDateTime.now();
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedLocalDateTime(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedLocalTimeReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedLocalTime(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedLocalTimeReturnedByIndex() throws SQLException {
+        final LocalTime value = LocalTime.now();
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedLocalTime(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedLocalTimeReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedLocalTime(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedLocalTimeReturnedByName() throws SQLException {
+        final LocalTime value = LocalTime.now();
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedLocalTime(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedLongReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedLong(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedLongReturnedByIndex() throws SQLException {
+        final Long value = 1976L;
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedLong(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedLongReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedLong(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedLongReturnedByName() throws SQLException {
+        final Long value = 1988L;
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedLong(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    @Test
+    public void emptyCoercedShortReturnedByIndex() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedShort(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedShortReturnedByIndex() throws SQLException {
+        final Short value = 1976;
+        when(mockResultSet.getObject(anyInt())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedShort(anyColumnIndex)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void emptyCoercedShortReturnedByName() throws SQLException {
+        when(mockResultSet.getObject(anyInt())).thenReturn(null);
+
+        assertThat(resultSetEx.getCoercedShort(anyColumnIndex)).isEmpty();
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnIndex));
+    }
+
+    @Test
+    public void presentCoercedShortReturnedByName() throws SQLException {
+        final Short value = 1988;
+        when(mockResultSet.getObject(anyString())).thenReturn(value);
+
+        assertThat(resultSetEx.getCoercedShort(anyColumnName)).isPresentAndEqualTo(value);
+
+        verify(mockResultSet, only()).getObject(eq(anyColumnName));
+    }
+
+    //
+    // The following methods aren't tested because it would just be testing that
+    // Optional.orElse returns properly. They all delegate to getOptional*
+    //      getInstant(int)
+    //      getInstant(String)
+    //      getInstant(int, Calendar)
+    //      getInstant(String, Calendar)
+    //      getLocalDate(int)
+    //      getLocalDate(String)
+    //      getLocalDate(int, Calendar)
+    //      getLocalDate(String, Calendar)
+    //      getLocalDateTime(int)
+    //      getLocalDateTime(String)
+    //      getLocalDateTime(int, Calendar)
+    //      getLocalDateTime(String, Calendar)
+    //      getLocalTime(int)
+    //      getLocalTime(String)
+    //      getLocalTime(int, Calendar)
+    //      getLocalTime(String, Calendar)
+    //
 
     @Test
     public void emptyOptionalArrayReturnedByIndex() throws SQLException {

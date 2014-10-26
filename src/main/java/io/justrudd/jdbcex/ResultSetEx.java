@@ -562,6 +562,41 @@ public interface ResultSetEx extends ResultSet {
      * @param columnIndex
      *          the first column is 1, the second is 2, ...
      * @return
+     *          the column value as a {@link Instant} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Instant}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
+    default Optional<Instant> getCoercedInstant(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToInstant);
+    }
+
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link Instant}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link Instant}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
+    default Optional<Instant> getCoercedInstant(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
+                .flatMap(Coercions::coerceToInstant);
+    }
+
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
      *          the column value as a {@link LocalDate} if the value is SQL <code>NULL</code>, the value
      *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
      *          a {@link LocalDate}, {@link Optional#empty() empty} is returned
@@ -590,6 +625,41 @@ public interface ResultSetEx extends ResultSet {
     default Optional<LocalDate> getCoercedLocalDate(final String columnLabel) throws SQLException {
         return getOptionalObject(columnLabel)
                 .flatMap(Coercions::coerceToLocalDate);
+    }
+
+    /**
+     *
+     * @param columnIndex
+     *          the first column is 1, the second is 2, ...
+     * @return
+     *          the column value as a {@link LocalDateTime} if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link LocalDateTime}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
+    default Optional<LocalDateTime> getCoercedLocalDateTime(final int columnIndex) throws SQLException {
+        return getOptionalObject(columnIndex)
+                .flatMap(Coercions::coerceToLocalDateTime);
+    }
+
+    /**
+     *
+     * @param columnLabel
+     *          The label for the column specified with the SQL AS clause.  If the SQL AS clause
+     *          was not specified, then the label is the name of the column
+     * @return
+     *          the column value as a {@link LocalDateTime}; if the value is SQL <code>NULL</code>, the value
+     *          {@link Optional#empty() empty} is returned. If the value cannot be coerced into
+     *          a {@link LocalDateTime}, {@link Optional#empty() empty} is returned
+     * @exception SQLException
+     *          if the columnIndex is not valid; if a database access error occurs or this method is
+     *          called on a closed result set
+     */
+    default Optional<LocalDateTime> getCoercedLocalDateTime(final String columnLabel) throws SQLException {
+        return getOptionalObject(columnLabel)
+                .flatMap(Coercions::coerceToLocalDateTime);
     }
 
     /**
