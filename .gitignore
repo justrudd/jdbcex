@@ -1,4 +1,3 @@
-*~
 .DS_Store
 .idea/
 target/
@@ -6,3 +5,4 @@ target/
 *.ipr
 pom.xml.versionsBackup
 
+.mvn/wrapper/maven-wrapper.jar
